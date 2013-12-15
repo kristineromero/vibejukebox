@@ -1,1 +1,1 @@
-web: python vibejukebox.py
+web: python hello.py
