@@ -1,1 +1,1 @@
-pyechonest==8.0.1
+flask==0.10.1
