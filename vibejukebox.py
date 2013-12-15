@@ -1,3 +1,5 @@
+print "Python is working"
+"""
 import urllib
 import urllib2
 import re
@@ -180,4 +182,5 @@ def MakePlaylist(similarArtists, songs):
 finished = MakePlaylist(simArtist, songs)
 
 print finished
+"""
 
