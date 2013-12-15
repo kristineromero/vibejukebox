@@ -1,1 +1,1 @@
-web: node web.js
+web: python bin/vibejukebox.py
