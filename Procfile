@@ -1,1 +1,1 @@
-web: python bin/vibejukebox.py
+web: python vibejukebox.py
