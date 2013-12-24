@@ -5,7 +5,8 @@ import urllib2
 import re
 import re, string, timeit
 import json
-
+songs = ["spotify:track:2kW59AS9OrpFsuXbi2939R", "spotify:track:4c9WmjVlQMr0s1IjbYO52Z", "spotify:track:6nAD4H0ujyEeBTxbXZkZeC", "spotify:track:2QzMJkYUhThZxM94ahgOzN", "spotify:track:4LloVtxNZpeh7q7xdi1DQc"]
+   
 
 # initialization
 app = Flask(__name__)
@@ -21,8 +22,6 @@ app.config.update(
 
 def getArtists(songs):
      find_artist_final = []
-     songs = ["spotify:track:2kW59AS9OrpFsuXbi2939R", "spotify:track:4c9WmjVlQMr0s1IjbYO52Z", "spotify:track:6nAD4H0ujyEeBTxbXZkZeC", "spotify:track:2QzMJkYUhThZxM94ahgOzN", "spotify:track:4LloVtxNZpeh7q7xdi1DQc"]
-   
      for i in range(len(songs)):
          createURL = "http://ws.spotify.com/lookup/1/?uri=" + songs[i]
          aResp = urllib2.urlopen(createURL);
