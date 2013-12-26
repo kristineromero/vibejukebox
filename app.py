@@ -9,7 +9,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
-@app.route('/todo/api/v1.0/tasks', methods = ['POST'])
+@app.route('/', methods = ['POST'])
 def getArtists():
     
     songs = request.json['songs']
