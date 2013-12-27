@@ -9,7 +9,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
-@app.route('/', methods = ['POST'])
+@app.route('https://warm-mountain-3237.herokuapp.com', methods = ['POST'])
 def getArtists():
     
     songs = request.json['songs']
@@ -32,10 +32,10 @@ def getArtists():
         find_artist = find_artist[0].split(":",2)[2]
         find_artist = find_artist.translate(None, string.punctuation)
         find_artist_final.append("&id=spotify-WW:artist:"+ find_artist)
-
+    return jsonify( { 'artistid': find_artist_final} )
     
     
-    
+"""    
     ###########################################################
     ############### WEIGHTING FUNCTION #######################
     
@@ -150,7 +150,7 @@ def getArtists():
             playlist.append("spotify:track:" + get_track)        
 
     return jsonify( { 'playlist': playlist} )
-    
+"""    
     
 if __name__ == '__main__':
     app.run(debug = True)
