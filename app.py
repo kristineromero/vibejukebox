@@ -33,7 +33,7 @@ def getArtists():
         find_artist = find_artist[0].split(":",2)[2]
         find_artist = find_artist.translate(None, string.punctuation)
         find_artist_final.append("&id=spotify-WW:artist:"+ find_artist)
-    return jsonify( { 'artistid': find_artist_final} )
+    
     
     
     
