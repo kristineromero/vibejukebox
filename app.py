@@ -13,12 +13,8 @@ app = Flask(__name__)
 def getArtists():
     
     songs = request.json['songs']
-    return jsonify( { 'songs': songs} )
-    
-if __name__ == '__main__':
-    app.run(debug = True)
 
-"""
+
     ###############################################################
     ################## SPOTIFY ID  FUNCTION #######################
 
@@ -160,4 +156,3 @@ if __name__ == '__main__':
 if __name__ == '__main__':
     app.run(debug = True)
     
-"""
