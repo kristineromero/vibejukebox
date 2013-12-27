@@ -13,7 +13,12 @@ app = Flask(__name__)
 def getArtists():
     
     songs = request.json['songs']
+    return jsonify( { 'songs': songs} )
     
+if __name__ == '__main__':
+    app.run(debug = True)
+
+"""
     ###############################################################
     ################## SPOTIFY ID  FUNCTION #######################
 
@@ -35,7 +40,7 @@ def getArtists():
     return jsonify( { 'artistid': find_artist_final} )
     
     
-"""    
+    
     ###########################################################
     ############### WEIGHTING FUNCTION #######################
     
