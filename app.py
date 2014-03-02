@@ -17,6 +17,10 @@ def getArtists():
         songs =  request.json['songs']
         
         
+        if len(songs) == 0:
+           songs = ["spotify:track:2kW59AS9OrpFsuXbi2939R", "spotify:track:4c9WmjVlQMr0s1IjbYO52Z", "spotify:track:6nAD4H0ujyEeBTxbXZkZeC", "spotify:track:2QzMJkYUhThZxM94ahgOzN", "spotify:track:4LloVtxNZpeh7q7xdi1DQc"]
+
+        
         ### API Key Configuration
         
         from pyechonest import config
