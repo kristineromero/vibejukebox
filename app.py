@@ -29,9 +29,7 @@ def getArtists():
         artists = []
         EchoNestSongId = []
         EchoNestArtistId = []
-        energy = []
-        dance = []
-        tempo = []
+       
         for i in range(len(songs)):
             songs[i] = songs[i].replace("spotify:track:", "spotify-WW:track:")
             try:
@@ -39,18 +37,12 @@ def getArtists():
                 EchoNestSongId.append(t.song_id)
                 EchoNestArtistId.append(t.id)
                 artists.append(t.artist)
-                if "energy" in vars(t):
-                    energy.append(t.energy)
-                if "danceability" in vars(t):
-                    dance.append(t.danceability)
-                if "tempo" in vars(t):
-                    tempo.append(t.tempo)
+                
             except:
                 continue
            
              
-        
-        
+                
         ######################          Terms Per Artist // All Terms           ########################
         
         ### Building Terms from Artists
@@ -124,25 +116,12 @@ def getArtists():
                 findSimilarArtist.append(artistShrink)
         findSimilarArtists = findSimilarArtist[1:20]
         
-        ######################          Setting Limits on Audio for Song Rec          ########################
-        
-        
-        min_danceability = dance[dance.index(min(dance))]
-        max_danceability = dance[dance.index(max(dance))]
-                                               
-        min_tempo = tempo[tempo.index(min(tempo))]
-        max_tempo = tempo[tempo.index(max(tempo))]
-                                        
-        min_energy = energy[energy.index(min(energy))] 
-        max_energy = energy[energy.index(max(energy))]
-                
-                                               
-        
+   
                
         ######################          Selecting Top Songs for Recommended Artists + Creates Playlist         ########################        
         playlist = []
         for i in findSimilarArtists:
-            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&min_danceability=" + str(min_danceability) + "&max_danceability=" + str(max_danceability) + "&results=2"
+            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&results=2"
             getURL = urllib2.urlopen(createURL);
             clean_page = getURL.read();
             if "spotify-WW:track" in clean_page:
