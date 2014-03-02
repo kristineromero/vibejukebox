@@ -163,12 +163,6 @@ class VibeJukeBox(object):
   
         
 
-def GetPlaylist():
-   test = VibeJukeBox(songs = songs)
-   test2 = test.getArtists()
-   return test.playlist
-  
-    
 if __name__ == '__main__':
     app.run(debug = True)
     
