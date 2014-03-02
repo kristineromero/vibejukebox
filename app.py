@@ -17,10 +17,6 @@ def getArtists():
         songs =  request.json['songs']
         
         
-        if len(songs) == 0:
-           songs = ["spotify:track:2kW59AS9OrpFsuXbi2939R", "spotify:track:4c9WmjVlQMr0s1IjbYO52Z", "spotify:track:6nAD4H0ujyEeBTxbXZkZeC", "spotify:track:2QzMJkYUhThZxM94ahgOzN", "spotify:track:4LloVtxNZpeh7q7xdi1DQc"]
-
-        
         ### API Key Configuration
         
         from pyechonest import config
@@ -38,16 +34,20 @@ def getArtists():
         tempo = []
         for i in range(len(songs)):
             songs[i] = songs[i].replace("spotify:track:", "spotify-WW:track:")
-            t = track.track_from_id(songs[i])
-            EchoNestSongId.append(t.song_id)
-            EchoNestArtistId.append(t.id)
-            artists.append(t.artist)
-            if "energy" in vars(t):
-                energy.append(t.energy)
-            if "danceability" in vars(t):
-                dance.append(t.danceability)
-            if "tempo" in vars(t):
-                tempo.append(t.tempo)
+            try:
+                t = track.track_from_id(songs[i])
+                EchoNestSongId.append(t.song_id)
+                EchoNestArtistId.append(t.id)
+                artists.append(t.artist)
+                if "energy" in vars(t):
+                    energy.append(t.energy)
+                if "danceability" in vars(t):
+                    dance.append(t.danceability)
+                if "tempo" in vars(t):
+                    tempo.append(t.tempo)
+            except:
+                continue
+           
              
         
         
@@ -63,10 +63,15 @@ def getArtists():
                 artistTerm = artist.Artist(artists[i]).terms
                 find_term = []
                 
-                for k in range(4):
-                    find_term.append(artistTerm[k]['name'])
+                limitTerms = 4
+                for artistT in artistTerm:
+                    find_term.append(artistT['name'])
+                    limitTerms -= 1
+                    if limitTerms == 0:
+                        break
+                
                 artist_dict[artists[i]] = find_term;
-                terms.extend(find_term[0:4])   
+                terms.extend(find_term)   
         
                
         
@@ -91,7 +96,7 @@ def getArtists():
             for value in artist_dict[key]:
                 if value in terms:
                     getWeight = getWeight+terms_dict[value]
-            weights[key] = getWeight-5
+            weights[key] = getWeight
             
         
         #checking weights
