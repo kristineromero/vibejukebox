@@ -11,16 +11,11 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['POST'])
 
-class VibeJukeBox(object):
-    
-    #### initialize self ####
-    
-    def __init__(self,songs):
-        self.songs =  request.json['songs']
-    
-
-
-    def getArtists(self):
+def getArtists():
+        
+        
+        songs =  request.json['songs']
+        
         
         ### API Key Configuration
         
@@ -31,7 +26,6 @@ class VibeJukeBox(object):
         ######################          Getting Artists + Song Info           ########################
         
         from pyechonest import track
-        songs = self.songs
         artists = []
         EchoNestSongId = []
         EchoNestArtistId = []
@@ -50,14 +44,7 @@ class VibeJukeBox(object):
                 dance.append(t.danceability)
             if "tempo" in vars(t):
                 tempo.append(t.tempo)
-        self.artist = artists
-        self.EchoNestSongId = EchoNestSongId
-        self.EchoNestArtistId = EchoNestArtistId    
-        self.energy = energy
-        self.tempo = tempo
-        self.dance = dance
-        
-        
+             
         
         
         ######################          Terms Per Artist // All Terms           ########################
@@ -77,9 +64,7 @@ class VibeJukeBox(object):
                 artist_dict[artists[i]] = find_term;
                 terms.extend(find_term[0:4])   
         
-        self.terms = terms
-        self.artist_dict  = artist_dict  
-        
+               
         
         ######################           Weights for Terms           ########################
         ##Creates weights for each term based on the number of times it appeared in artist list
@@ -90,8 +75,7 @@ class VibeJukeBox(object):
                 find_count = terms.count(terms[i])
                 terms_dict[terms[i]] = find_count
                     
-        self.terms_dict = terms_dict
-        
+               
         
         ######################           Weights for Artists            ########################
         ## Adds all of the weights per term per artist to get the overall weight for an artist
@@ -131,9 +115,6 @@ class VibeJukeBox(object):
                 findSimilarArtist.append(artistShrink)
         findSimilarArtists = findSimilarArtist[1:20]
         
-        self.findSimilarArtists = findSimilarArtists
-        
-        
         ######################          Setting Limits on Audio for Song Rec          ########################
         
         
@@ -159,10 +140,12 @@ class VibeJukeBox(object):
                 get_track = clean_page[clean_page.index("spotify-WW:track")-1:clean_page.index("spotify-WW:track")+60].replace(":", ",").split(",")[2].translate(None, string.punctuation)
                 playlist.append("spotify:track:" + get_track)        
         
-        self.playlist = jsonify( { 'playlist': playlist} )
-  
+        playlist = jsonify( { 'playlist': playlist} )
+        
+        return(playlist)
+    
+
         
 
 if __name__ == '__main__':
     app.run(debug = True)
-    
