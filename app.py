@@ -163,11 +163,10 @@ class VibeJukeBox(object):
   
         
 
-
-test = VibeJukeBox(songs = songs)
-test2 = test.getArtists()
-
-return test.playlist
+def GetPlaylist():
+   test = VibeJukeBox(songs = songs)
+   test2 = test.getArtists()
+   return test.playlist
   
     
 if __name__ == '__main__':
