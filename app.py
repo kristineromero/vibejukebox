@@ -24,12 +24,19 @@ def getArtists():
         
         
         ######################          Getting Artists + Song Info           ########################
+        ## Basic info on the artists and song from the Echonest API based on a spotify ID sent to the 
+        ## app. This part also collects  any available information on tempo, danceability and energy
+        ## from the Echonest API for use in subsetting the recommended playlist
+        
         
         from pyechonest import track
         artists = []
         EchoNestSongId = []
         EchoNestArtistId = []
-       
+        energy = []
+        dance = []
+        tempo = []
+        
         for i in range(len(songs)):
             songs[i] = songs[i].replace("spotify:track:", "spotify-WW:track:")
             try:
@@ -37,6 +44,13 @@ def getArtists():
                 EchoNestSongId.append(t.song_id)
                 EchoNestArtistId.append(t.id)
                 artists.append(t.artist)
+                
+                if "energy" in vars(t):
+                    energy.append(t.energy)
+                if "danceability" in vars(t):
+                    dance.append(t.danceability)
+                if "tempo" in vars(t):
+                    tempo.append(t.tempo)
                 
             except:
                 continue
@@ -116,12 +130,39 @@ def getArtists():
                 findSimilarArtist.append(artistShrink)
         findSimilarArtists = findSimilarArtist[1:30]
         
+        
+        
+        ######################          Setting Limits on Audio for Song Rec          ########################
+        ### Used to find songs in range of input songs on danceability, enerygy, and tempo, and return full range
+        ### values if there is not enough data to calculate an adjusted range
+        ### NOTE: Currently - tempo and energy not used 
+        
+        if len(dance) > 1:
+            min_danceability = dance[dance.index(min(dance))]
+            max_danceability = dance[dance.index(max(dance))]
+        else:
+            min_danceability = 0
+            max_danceability = 1
+        
+        if len(tempo) > 1:                                       
+            min_tempo = tempo[tempo.index(min(tempo))]
+            max_tempo = tempo[tempo.index(max(tempo))]
+        else:
+            min_tempo = 0
+            max_tempo = 500
+        
+        if len(energy) > 1:                                
+            min_energy = energy[energy.index(min(energy))] 
+            max_energy = energy[energy.index(max(energy))]
+        else: 
+            min_energy = 0 
+            max_energy = 1 
    
                
         ######################          Selecting Top Songs for Recommended Artists + Creates Playlist         ########################        
         playlist = []
         for i in findSimilarArtists:
-            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&results=5"
+            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&&min_danceability=" + str(min_danceability) + "&max_danceability=" + str(max_danceability) + "results=5"
             getURL = urllib2.urlopen(createURL);
             clean_page = getURL.read();
             if "spotify-WW:track" in clean_page:
