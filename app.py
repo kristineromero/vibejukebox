@@ -162,7 +162,7 @@ def getArtists():
         ######################          Selecting Top Songs for Recommended Artists + Creates Playlist         ########################        
         playlist = []
         for i in findSimilarArtists:
-            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&&min_danceability=" + str(min_danceability) + "&max_danceability=" + str(max_danceability) + "results=5"
+            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&min_danceability=" + str(min_danceability) + "&max_danceability=" + str(max_danceability) + "&results=5"
             getURL = urllib2.urlopen(createURL);
             clean_page = getURL.read();
             if "spotify-WW:track" in clean_page:
