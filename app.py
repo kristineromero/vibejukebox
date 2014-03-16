@@ -114,14 +114,14 @@ def getArtists():
                 artistShrink= artistShrink.translate(None, string.punctuation)
                 artistShrink = artistShrink.strip()
                 findSimilarArtist.append(artistShrink)
-        findSimilarArtists = findSimilarArtist[1:20]
+        findSimilarArtists = findSimilarArtist[1:30]
         
    
                
         ######################          Selecting Top Songs for Recommended Artists + Creates Playlist         ########################        
         playlist = []
         for i in findSimilarArtists:
-            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&results=2"
+            createURL="http://developer.echonest.com/api/v4/song/search?api_key=YZZS9XI0IMOLQRKQ6&artist_id=" +i+ "&bucket=id:spotify-WW&bucket=tracks&sort=song_hotttnesss-desc&results=5"
             getURL = urllib2.urlopen(createURL);
             clean_page = getURL.read();
             if "spotify-WW:track" in clean_page:
